@@ -9,6 +9,9 @@ import scala.Tuple2;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * spark数据倾斜处理：key随机前缀
+ */
 public class DataSkewTest {
 
     public static void main(String[] args) {

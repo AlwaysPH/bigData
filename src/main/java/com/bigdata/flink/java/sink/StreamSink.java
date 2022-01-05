@@ -13,6 +13,7 @@ import org.apache.flink.streaming.connectors.redis.common.mapper.RedisMapper;
 
 
 /**
+ * 数据存储到redis
  * @author 1110734@cecdat.com
  * @version 1.0.0
  */

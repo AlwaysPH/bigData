@@ -17,7 +17,7 @@ import org.apache.flink.streaming.connectors.redis.common.mapper.RedisMapper;
  * @author 1110734@cecdat.com
  * @version 1.0.0
  */
-public class StreamSink {
+public class StreamToRedisSink {
 
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();

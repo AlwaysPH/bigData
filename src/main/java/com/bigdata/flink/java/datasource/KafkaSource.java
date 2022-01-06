@@ -3,7 +3,7 @@ package com.bigdata.flink.java.datasource;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011;
 
 import java.util.Properties;
 
@@ -20,7 +20,7 @@ public class KafkaSource {
         properties.setProperty("bootstrap.servers", "bigData04:9092");
         properties.setProperty("group.id", "test");
 
-        FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<String>("topic", new SimpleStringSchema(), properties);
+        FlinkKafkaConsumer011<String> consumer = new FlinkKafkaConsumer011<String>("topic", new SimpleStringSchema(), properties);
         DataStreamSource<String> stream = env.addSource(consumer);
 
         //todo 数据处理

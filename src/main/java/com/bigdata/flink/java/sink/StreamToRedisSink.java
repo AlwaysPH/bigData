@@ -30,7 +30,7 @@ public class StreamToRedisSink {
             }
         });
 
-        FlinkJedisPoolConfig conf = new FlinkJedisPoolConfig.Builder().setHost("bigData04").setPort(6379).build();
+        FlinkJedisPoolConfig conf = new FlinkJedisPoolConfig.Builder().setHost("bigData04").setPort(6379).setPassword("888888").build();
 
         data.addSink(new RedisSink<Tuple2<String, String>>(conf, new RedisStreamMapper()));
         env.execute("StreamSink");
@@ -38,6 +38,7 @@ public class StreamToRedisSink {
 
     public static class RedisStreamMapper implements RedisMapper<Tuple2<String, String>>{
 
+        //定义保存数据到Redis的命令，存成hash表
         @Override
         public RedisCommandDescription getCommandDescription() {
             return new RedisCommandDescription(RedisCommand.HSET, "HASH_NAME");

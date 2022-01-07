@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * flink连接ES
+ * flink写入ES
  * @author 1110734@cecdat.com
  * @version 1.0.0
  */

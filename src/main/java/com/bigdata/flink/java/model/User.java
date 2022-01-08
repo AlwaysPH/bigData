@@ -5,6 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
+ * Java的POJO类属性修饰符应该为public，并且必须含有无参构造方法
  * @author 1110734@cecdat.com
  * @version 1.0.0
  */
@@ -17,6 +18,9 @@ public class User implements Serializable {
     private String name;
 
     private Integer age;
+
+    public User() {
+    }
 
     public User(Integer id, String name, Integer age) {
         this.id = id;

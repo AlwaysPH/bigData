@@ -24,7 +24,7 @@ public class WindowType {
 
         DataStream<User> dataStream = source.map(e -> {
             String[] data = e.split(",");
-            return new User(Integer.valueOf(data[0]), data[1], Integer.valueOf(data[2]));
+            return new User(Integer.valueOf(data[0]), data[1], Integer.valueOf(data[2]), Long.valueOf(data[3]));
         });
 
         dataStream.keyBy(s -> s.getId())

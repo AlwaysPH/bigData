@@ -19,12 +19,15 @@ public class User implements Serializable {
 
     private Integer age;
 
+    private Long time;
+
     public User() {
     }
 
-    public User(Integer id, String name, Integer age) {
+    public User(Integer id, String name, Integer age, Long time) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.time = time;
     }
 }

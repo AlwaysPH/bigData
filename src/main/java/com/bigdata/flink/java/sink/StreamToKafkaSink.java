@@ -24,7 +24,7 @@ public class StreamToKafkaSink {
 
         DataStream<String> dataStream = source.map(e -> {
             String[] data = e.split(",");
-            return new User(Integer.valueOf(data[0]), data[1], Integer.valueOf(data[2])).toString();
+            return new User(Integer.valueOf(data[0]), data[1], Integer.valueOf(data[2]), Long.valueOf(data[3])).toString();
         });
 
         Properties properties = new Properties();

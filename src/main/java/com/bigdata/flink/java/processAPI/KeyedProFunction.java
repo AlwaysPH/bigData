@@ -1,4 +1,4 @@
-package com.bigdata.flink.java.proccessAPI;
+package com.bigdata.flink.java.processAPI;
 
 import com.bigdata.flink.java.model.User;
 import org.apache.flink.api.common.state.ValueState;

@@ -1,23 +1,30 @@
-package com.bigdata.flink.java.tablesql;
+package com.bigdata.flink.java.tableApi;
 
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.TableEnvironment;
+import org.apache.flink.table.api.bridge.java.BatchTableEnvironment;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 
 /**
+ * TableEnv环境创建
  * @author 1110734@cecdat.com
  * @version 1.0.0
  */
 public class TableEnv {
     public static void main(String[] args) {
+
+        /**基于流处理**/
+        StreamExecutionEnvironment streamEnv = StreamExecutionEnvironment.getExecutionEnvironment();
         //指定执行引擎为blink，以及数据处理模式为-stream
         EnvironmentSettings settings = EnvironmentSettings.newInstance().useBlinkPlanner().inStreamingMode().build();
         //创建TableEnvironment对象
-        TableEnvironment tableEnvironment = TableEnvironment.create(settings);
+        StreamTableEnvironment streamTableEnv = StreamTableEnvironment.create(streamEnv, settings);
 
 
+        /**基于批处理**/
+        ExecutionEnvironment batchEnv = ExecutionEnvironment.getExecutionEnvironment();
         //指定执行引擎为blink，以及数据处理模式为-batch
         EnvironmentSettings bSettings = EnvironmentSettings.newInstance().useBlinkPlanner().inBatchMode().build();
         //创建TableEnvironment对象
@@ -34,8 +41,8 @@ public class TableEnv {
         StreamTableEnvironment environment = StreamTableEnvironment.create(env, ssSetting);
 
         //创建batchTableEnvironment
-//        ExecutionEnvironment executionEnvironment = ExecutionEnvironment.getExecutionEnvironment();
-//        BatchTableEnvironment batchTableEnvironment = BatchTableEnvironment.create(executionEnvironment);
+        ExecutionEnvironment executionEnvironment = ExecutionEnvironment.getExecutionEnvironment();
+        BatchTableEnvironment batchTableEnvironment = BatchTableEnvironment.create(executionEnvironment);
 
     }
 }

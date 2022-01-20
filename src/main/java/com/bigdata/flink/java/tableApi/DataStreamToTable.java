@@ -1,4 +1,4 @@
-package com.bigdata.flink.java.tablesql;
+package com.bigdata.flink.java.tableApi;
 
 import com.google.common.collect.Lists;
 import org.apache.flink.api.java.tuple.Tuple2;

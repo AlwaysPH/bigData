@@ -1,4 +1,4 @@
-package com.bigdata.flink.java.tableApi;
+package com.bigdata.flink.java.tableApiAndSQL;
 
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;

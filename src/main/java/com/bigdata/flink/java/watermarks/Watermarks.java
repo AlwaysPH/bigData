@@ -36,14 +36,15 @@ public class Watermarks {
             return new User(Integer.valueOf(data[0]), data[1], Integer.valueOf(data[2]), Long.valueOf(data[3]));
         })
                 //乱序数据设置时间戳和watermark
-//                .assignTimestampsAndWatermarks(WatermarkStrategy.forBoundedOutOfOrderness(Duration.ofMillis(200)));
+                .assignTimestampsAndWatermarks(WatermarkStrategy.<User>forBoundedOutOfOrderness(Duration.ofSeconds(2))
+                .withTimestampAssigner((user, timestamp) -> user.getTime()));
                 //Time.seconds(2)设置2秒延迟时间
-        .assignTimestampsAndWatermarks(new BoundedOutOfOrdernessTimestampExtractor<User>(Time.seconds(2)) {
-            @Override
-            public long extractTimestamp(User element) {
-                return element.getTime();
-            }
-        });
+//        .assignTimestampsAndWatermarks(new BoundedOutOfOrdernessTimestampExtractor<User>(Time.seconds(2)) {
+//            @Override
+//            public long extractTimestamp(User element) {
+//                return element.getTime();
+//            }
+//        });
 
         //侧输出流标记
         OutputTag<User> outputTag = new OutputTag<User>("late"){};

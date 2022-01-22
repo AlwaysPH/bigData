@@ -1,4 +1,4 @@
-package com.bigdata.flink.java.tableApi;
+package com.bigdata.flink.java.tableApiAndSQL;
 
 import com.bigdata.flink.java.model.User;
 import org.apache.flink.streaming.api.datastream.DataStream;

@@ -1,17 +1,9 @@
-package com.bigdata.flink.java.tableApi;
+package com.bigdata.flink.java.tableApiAndSQL.sink;
 
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.table.api.DataTypes;
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.Table;
-import org.apache.flink.table.api.TableResult;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
-import org.apache.flink.table.descriptors.Csv;
-import org.apache.flink.table.descriptors.FileSystem;
-import org.apache.flink.table.descriptors.Schema;
-import org.apache.flink.table.types.DataType;
-
-import static org.apache.flink.table.api.Expressions.$;
 
 /**
  * table api 连接外部系统读取数据

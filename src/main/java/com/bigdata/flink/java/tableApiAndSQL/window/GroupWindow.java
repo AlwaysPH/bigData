@@ -20,7 +20,7 @@ import static org.apache.flink.table.api.Expressions.$;
 import static org.apache.flink.table.api.Expressions.lit;
 
 /**
- * Table API和SQL定义group window
+ * Table API和SQL定义Group Windows
  * @author 1110734@cecdat.com
  * @version 1.0.0
  */

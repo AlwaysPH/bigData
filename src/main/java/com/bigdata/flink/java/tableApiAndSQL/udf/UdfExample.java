@@ -43,18 +43,25 @@ public class UdfExample {
 
         //UDF函数注册
         init(tableEnv);
+        tableEnv.createTemporaryView("t_user", table);
 
+        /**标量函数**/
         //table api实现
         Table tableResult = table.select($("id"), call("NOT_NULL", $("name")).as("flag"), $("pt"));
-
         //sql实现
-        tableEnv.createTemporaryView("t_user", table);
         Table sqlResult = tableEnv.sqlQuery("select id, NOT_NULL(name) as flag, pt from t_user");
-        sqlResult.execute().print();
+
+        /**表函数**/
+        //table api实现
+        Table result = table.joinLateral(call("SPLIT", $("name"), "_").as("newName", "length"))
+                .select($("id"), $("name"), $("newName"), $("length"));
+        //sql实现
+        Table sqlTableResult = tableEnv.sqlQuery("select id, name, newName, length from t_user, LATERAL TABLE(SPLIT(name, '_')) as splitName(newName, length)");
+
+        sqlTableResult.execute().print();
     }
 
     private static void init(StreamTableEnvironment tableEnv) {
-        System.out.println(FunctionLoader.INSTANCE.discoverFunctions().size());
         FunctionLoader.INSTANCE.discoverFunctions().forEach(function -> {
             if (function instanceof ScalarFunction) {
                 tableEnv.createTemporarySystemFunction(function.getName(), (ScalarFunction) function);

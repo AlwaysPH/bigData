@@ -1,2 +1,3 @@
 com.bigdata.flink.java.tableApiAndSQL.udf.function.FiledNotNullValidator
 com.bigdata.flink.java.tableApiAndSQL.udf.function.ValueRangeValidator
+com.bigdata.flink.java.tableApiAndSQL.udf.function.SplitDataTableFunction

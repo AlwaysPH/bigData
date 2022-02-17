@@ -58,7 +58,15 @@ public class UdfExample {
         //sql实现
         Table sqlTableResult = tableEnv.sqlQuery("select id, name, newName, length from t_user, LATERAL TABLE(SPLIT(name, '_')) as splitName(newName, length)");
 
-        sqlTableResult.execute().print();
+        /**表函数**/
+        //table api实现
+        Table aggResult = table.groupBy($("id")).aggregate("AVG_AGG(age) as avg_age")
+                .select($("id"), $("avg_age"));
+
+        //sql实现
+//        Table aggSqlResult = tableEnv.sqlQuery("select id, AVG_AGG(age) as ageTemp from t_user group by id");
+
+        aggResult.execute().print();
     }
 
     private static void init(StreamTableEnvironment tableEnv) {

@@ -8,6 +8,10 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
+/**
+ * hadoop序列化和反序列化
+ * 反序列化的顺序和序列化的顺序完全一致
+ */
 public class HadoopSerialize {
     public static void main(String[] args) {
         StudentWriteable studentWriteable = new StudentWriteable();
@@ -21,6 +25,9 @@ class StudentWriteable implements Writable{
     private Long id;
 
     private String name;
+
+    public StudentWriteable() {
+    }
 
     public Long getId() {
         return id;

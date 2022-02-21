@@ -12,6 +12,10 @@ public class MyMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
 
     private static final Logger log = LoggerFactory.getLogger(MyMapper.class);
 
+    private Text text = new Text();
+
+    private LongWritable v2 = new LongWritable(1L);
+
     /**
      * 需要实现map函数
      * 函数接收<k1, v1>，产生<k2, v2>
@@ -27,10 +31,9 @@ public class MyMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
         log.info("K1,V1的值为：<" + key + ", " + value+ ">");
         String[] values = value.toString().split(" ");
         for(String i : values){
-            Text k2 = new Text(i);
-            LongWritable v2 = new LongWritable(1L);
-            context.write(k2, v2);
-            log.info("K2,V2的值为：<" + k2.toString() + ", " + v2.get()+ ">");
+            text.set(i);
+            context.write(text, v2);
+            log.info("K2,V2的值为：<" + text.toString() + ", " + v2.get()+ ">");
         }
     }
 }

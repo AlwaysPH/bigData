@@ -1,4 +1,4 @@
-package com.bigdata.mapreduce;
+package com.bigdata.hadoop.mapreduce;
 
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;

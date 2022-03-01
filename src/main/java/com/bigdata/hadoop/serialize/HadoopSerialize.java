@@ -1,8 +1,6 @@
-package com.bigdata.serialize;
+package com.bigdata.hadoop.serialize;
 
 import org.apache.hadoop.io.Writable;
-import org.apache.hadoop.mapreduce.InputFormat;
-import org.apache.hadoop.mapreduce.OutputFormat;
 
 import java.io.DataInput;
 import java.io.DataOutput;

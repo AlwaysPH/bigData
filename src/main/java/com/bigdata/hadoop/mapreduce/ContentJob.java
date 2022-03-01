@@ -1,4 +1,4 @@
-package com.bigdata.mapreduce;
+package com.bigdata.hadoop.mapreduce;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -37,6 +37,10 @@ public class ContentJob {
             job.setReducerClass(MyReducer.class);
             job.setOutputKeyClass(Text.class);
             job.setOutputValueClass(LongWritable.class);
+
+            //自定义分区需要指定
+            job.setPartitionerClass(MyPartitioner.class);
+            job.setNumReduceTasks(5);
 
             job.waitForCompletion(true);
         } catch (IOException e) {

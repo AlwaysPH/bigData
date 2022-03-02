@@ -201,6 +201,12 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.15</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-hbase_2.12</artifactId>
+            <version>1.10.3</version>
+        </dependency>
     </dependencies>
 
     <build>

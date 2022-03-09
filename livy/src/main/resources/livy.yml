@@ -15,7 +15,7 @@ livy:
   #指定spark jar依赖的外部jar包(hdfs存放路径)
   jars: [/kong/data/jar/dbscan-on-spark_2.11-0.2.0-SNAPSHOT.jar]
   #spark程序启动类
-  className: com.bigdata.spark.java.sparkOpt.SampleKeyJoinTest
+  className: com.spark.java.sparkOpt.SampleKeyJoinTest
   name: sampleKeyJoinTest
   #执行器的CPU核心数
   executorCores: 3

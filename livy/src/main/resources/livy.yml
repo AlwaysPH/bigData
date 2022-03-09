@@ -1,0 +1,31 @@
+#spark配置
+spark:
+  master: yarn
+  submit:
+    deployMode: cluster
+
+#livy配置
+livy:
+  host: http://ip:8998
+  #livy使用session类型
+  kind: spark
+  proxyUser: etluser
+  #hdfs中存放spark程序jar包路径
+  file: hdfs://dfs:9001/data/jar/sparkDemo.jar
+  #指定spark jar依赖的外部jar包(hdfs存放路径)
+  jars: [/kong/data/jar/dbscan-on-spark_2.11-0.2.0-SNAPSHOT.jar]
+  #spark程序启动类
+  className: com.bigdata.spark.java.sparkOpt.SampleKeyJoinTest
+  name: sampleKeyJoinTest
+  #执行器的CPU核心数
+  executorCores: 3
+  #执行器的内存
+  executorMemory: 2G
+  #driver端的CPU核心数
+  driverCores: 1
+  #driver端的内存
+  driverMemory: 4G
+  #启动的executor数
+  numExecutors: 6
+  queue: default
+

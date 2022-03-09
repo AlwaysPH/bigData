@@ -49,11 +49,18 @@ public class SampleKeyJoinTest {
             int prefix = random.nextInt(100);
             return new Tuple2<String, Long>(prefix + "_" + e._1, e._2);
         });
-        /***数据倾斜最多且随机打散的randomRDD，和另外需要join的RDD进行join，
-         * join后的数据去除随机前缀
-         * 并普通的commonRDD也和需要join的RDD进行join
-         * 最终和并2个join后的数据***/
-
-
+        //打散后的数据进行局部聚合
+        JavaPairRDD<String, Long> randomReduceRDD = randomRDD.reduceByKey((x, y) -> x + y);
+        //去掉随机前缀
+        JavaPairRDD<String, Long> resRdd = randomReduceRDD.mapToPair(e -> {
+            String[] str = e._1.split("_");
+            return new Tuple2<String, Long>(str[1], e._2);
+        });
+        JavaPairRDD<String, Long> pairRDD = resRdd.reduceByKey((x, y) -> x + y);
+        pairRDD.foreach(e -> System.out.println(e._1 + "-" + e._2));
+        //和不包含数据倾斜最多key的RDD进行聚合
+        JavaPairRDD<String, Long> resultRDD = pairRDD.join(commonRDD).mapToPair(e -> {
+            return new Tuple2<>(e._1, e._2._1);
+        });
     }
 }

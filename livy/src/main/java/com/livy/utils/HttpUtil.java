@@ -50,11 +50,13 @@ public class HttpUtil {
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            if (conn!=null)
+            if (conn!=null) {
                 conn.disconnect();
+            }
             try {
-                if (in != null)
+                if (in != null) {
                     in.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -111,19 +113,23 @@ public class HttpUtil {
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            if (conn!= null)
+            if (conn!= null) {
                 conn.disconnect();
+            }
             try {
-                if (in!=null)
+                if (in!=null) {
                     in.close();
-                if (out!=null)
+                }
+                if (out!=null) {
                     out.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        if (builder != null)
+        if (builder != null) {
             return builder.toString();
+        }
         return "";
     }
 }

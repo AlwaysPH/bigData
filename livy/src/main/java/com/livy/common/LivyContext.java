@@ -73,8 +73,10 @@ public class LivyContext {
 
         livyConf.put("conf", sparkConf);
         livyConf.put("proxyUser", proxyUser);
-        livyConf.put("file", file);// 指定执行的spark jar (hdfs路径)
-        livyConf.put("jars", jars);//指定spark jar依赖的外部jars
+        // 指定执行的spark jar (hdfs路径)
+        livyConf.put("file", file);
+        //指定spark jar依赖的外部jars
+        livyConf.put("jars", jars);
         livyConf.put("className", className);
         livyConf.put("name", name);
         livyConf.put("executorCores", executorCores);
@@ -83,7 +85,8 @@ public class LivyContext {
         livyConf.put("driverMemory", driverMemory);
         livyConf.put("numExecutors", numExecutors);
         livyConf.put("queue", queue);
-        livyConf.put("args",new String[]{"杭州","yj_hangzhou","2019041719"});//传递参数
+        //传递参数
+        livyConf.put("args",new String[]{"杭州","yj_hangzhou","2019041719"});
 
         String res = HttpUtil.postAccess(host + "/batches", livyConf);
         JSONObject resjson = JSON.parseObject(res);

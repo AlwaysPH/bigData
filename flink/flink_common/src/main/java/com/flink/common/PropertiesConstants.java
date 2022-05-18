@@ -46,6 +46,7 @@ public class PropertiesConstants {
     /**
      * mysql
      */
+    public static final String MYSQL_DRIVER = "mysql.jdbc.driverClass";
     public static final String MYSQL_URL = "mysql.jdbc.connectionURL";
     public static final String MYSQL_USERNAME = "mysql.jdbc.username";
     public static final String MYSQL_PASSWORD = "mysql.jdbc.password";

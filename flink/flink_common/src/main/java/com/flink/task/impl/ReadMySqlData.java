@@ -29,41 +29,36 @@ public class ReadMySqlData extends BaseJob {
     @Override
     protected void runJob(StreamExecutionEnvironment env) throws Exception {
         String querySql = "SELECT\n" +
-                "\tt.CID,\n" +
-                "\tt.PROJECT_ID,\n" +
-                "\tt.VEH_ID,\n" +
-                "\tt.WORK_DATE,\n" +
-                "\tt.TODAY_TOTAL_FUEL,\n" +
-                "\tt.TODAY_WORK_FUEL,\n" +
-                "\tt.TODAY_TOTAL_MILEAGE,\n" +
-                "\tt.TODAY_WORK_MILEAGE,\n" +
-                "\tt.TODAY_WORK_TIMES,\n" +
-                "\tt.TODAY_TOTAL_TIMES,\n" +
-                "\tt.FIRST_FUEL,\n" +
-                "\tt.LAST_FUEL,\n" +
-                "\tt.FIRST_GPS_TIME,\n" +
-                "\tt.LAST_GPS_TIME,\n" +
-                "\tt.FIRST_MILEAGE,\n" +
-                "\tt.LAST_MILEAGE,\n" +
-                "\tt.ADD_WATER_COUNT,\n" +
-                "\tt.COLLECT_NUMBER,\n" +
-                "\tt.ADD_WATER_AVG_MILEAGE,\n" +
-                "\tt.WORK_AREA,\n" +
-                "\tt.AVG_ADD_WATER_WORK_AREA,\n" +
-                "\tt.FIRST_COLLECT_TIME,\n" +
-                "\tt.END_COLLECT_TIME,\n" +
-                "\tt.FIRST_UNLOAD_TIME,\n" +
-                "\tt.END_UNLOAD_TIME,\n" +
-                "\tt.TOTAL_COLLECT,\n" +
-                "\tt.TRANSPORT_NUM,\n" +
-                "\tt.ONLINE_TIMES,\n" +
-                "\tt.VEH_TYPE,\n" +
+                "\tt.CID AS id,\n" +
+                "\tt.PROJECT_ID AS projectId,\n" +
+                "\tt.VEH_ID AS vehId,\n" +
+                "\tt.WORK_DATE AS workDate,\n" +
+                "\tt.TODAY_TOTAL_FUEL AS todayTotalFuel,\n" +
+                "\tt.TODAY_WORK_FUEL AS todayWorkFuel,\n" +
+                "\tt.TODAY_TOTAL_MILEAGE AS todayTotalMileage,\n" +
+                "\tt.TODAY_WORK_MILEAGE AS todayWorkMileage,\n" +
+                "\tt.TODAY_WORK_TIMES AS todayWorkTimes,\n" +
+                "\tt.TODAY_TOTAL_TIMES AS todayTotalTimes,\n" +
+                "\tt.FIRST_FUEL AS firstFuel,\n" +
+                "\tt.LAST_FUEL AS lastFuel,\n" +
+                "\tt.FIRST_GPS_TIME AS firstGpsTime,\n" +
+                "\tt.LAST_GPS_TIME AS lastGpsTime,\n" +
+                "\tt.FIRST_MILEAGE AS firstMileage,\n" +
+                "\tt.LAST_MILEAGE AS lastMileage,\n" +
+                "\tt.ADD_WATER_COUNT AS addWaterCount,\n" +
+                "\tt.COLLECT_NUMBER AS collectNumber,\n" +
+                "\tt.ADD_WATER_AVG_MILEAGE AS addWaterAvgMileage,\n" +
+                "\tt.WORK_AREA AS workArea,\n" +
+                "\tt.TOTAL_COLLECT AS totalCollect,\n" +
+                "\tt.TRANSPORT_NUM AS transportNum,\n" +
+                "\tt.ONLINE_TIMES AS onlineTimes,\n" +
+                "\tt.VEH_TYPE AS vehType,\n" +
                 "\tv.VBI_LICENSE AS vbiLicense,\n" +
                 "\tp.PROJECT_NAME AS projectName,\n" +
                 "\tTDD.DATA_NAME AS vehClassName,\n" +
                 "\tTDD1.DATA_NAME AS vehSecondClassName\n" +
                 "FROM\n" +
-                "t_vehicle_today_totaljob_info t\n" +
+                "\tt_vehicle_today_totaljob_info t\n" +
                 "INNER JOIN veh_base_info v ON t.veh_id = v.id\n" +
                 "AND v.delete_flag = 0\n" +
                 "LEFT JOIN t_project_info p ON t.project_id = p.id\n" +
@@ -82,7 +77,7 @@ public class ReadMySqlData extends BaseJob {
                 "AND '2022-05-17' >= t.`WORK_DATE`\n" +
                 "ORDER BY\n" +
                 "\tt.WORK_DATE DESC,\n" +
-                "\tt.CID DESC\n";
+                "\tt.CID DESC";
         DataStreamSource<VehJobInfo> source = env.addSource(new MysqlSource(querySql)).setParallelism(1);
         source.print();
         env.execute();

@@ -13,11 +13,11 @@ import java.io.IOException;
  * @version 1.0
  * @date 2022-3-14 11:48
  */
-public class ExecutionEnvUtil {
+public class ExecutionEnvUtils {
 
     public static ParameterTool createParameterTool(final String[] args) throws Exception {
         return ParameterTool
-                .fromPropertiesFile(ExecutionEnvUtil.class.getResourceAsStream(PropertiesConstants.PROPERTIES_FILE_NAME))
+                .fromPropertiesFile(ExecutionEnvUtils.class.getResourceAsStream(PropertiesConstants.PROPERTIES_FILE_NAME))
                 .mergeWith(ParameterTool.fromArgs(args))
                 .mergeWith(ParameterTool.fromSystemProperties());
     }
@@ -27,7 +27,7 @@ public class ExecutionEnvUtil {
     public static ParameterTool createParameterTool() {
         try {
             return ParameterTool
-                    .fromPropertiesFile(ExecutionEnvUtil.class.getResourceAsStream(PropertiesConstants.PROPERTIES_FILE_NAME))
+                    .fromPropertiesFile(ExecutionEnvUtils.class.getResourceAsStream(PropertiesConstants.PROPERTIES_FILE_NAME))
                     .mergeWith(ParameterTool.fromSystemProperties());
         } catch (IOException e) {
             e.printStackTrace();

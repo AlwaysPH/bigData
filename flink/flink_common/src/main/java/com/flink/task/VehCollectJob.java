@@ -1,35 +1,31 @@
 package com.flink.task;
 
+import com.flink.function.MysqlSourceFunction;
+import com.flink.function.VehCollectFlatMapFunction;
 import com.flink.model.VehJobInfo;
 import com.flink.model.enums.DateEnum;
 import com.flink.model.req.QueryParams;
 import com.flink.utils.DateUtils;
-import com.flink.utils.ExecutionEnvUtil;
-import com.flink.utils.JdbcUtils;
-import com.flink.utils.MysqlConfigUtil;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
+import com.flink.utils.ExecutionEnvUtils;
+import com.flink.utils.SinkToJdbcUtils;
 import org.apache.flink.api.java.utils.ParameterTool;
-import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
+import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.source.RichSourceFunction;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * @author 00074964
  * @version 1.0
  * @date 2022-5-18 15:48
  */
-public class GetMysqlJob {
+public class VehCollectJob {
 
     public static void main(String[] args) throws Exception {
-        ParameterTool parameterTool =  ExecutionEnvUtil.createParameterTool();
-        StreamExecutionEnvironment env = ExecutionEnvUtil.prepare(parameterTool);
+        ParameterTool parameterTool =  ExecutionEnvUtils.createParameterTool();
+        StreamExecutionEnvironment env = ExecutionEnvUtils.prepare(parameterTool);
         String querySql = "SELECT " +
                 "t.CID as id, " +
                 "t.PROJECT_ID as projectId, " +
@@ -82,43 +78,9 @@ public class GetMysqlJob {
                 "t.CID DESC";
         String time = DateUtils.parseToString(new Date(), DateEnum.YEAR_MONTH_DAY.getType());
         QueryParams params = new QueryParams("2022-05-17", "2022-05-17");
-        DataStreamSource<List<VehJobInfo>> source = env.addSource(new MysqlSource(querySql, parameterTool, params));
-        source.print();
+        DataStreamSource<List<VehJobInfo>> source = env.addSource(new MysqlSourceFunction(querySql, parameterTool, params));
+        SingleOutputStreamOperator<List<VehJobInfo>> flatMap = source.flatMap(new VehCollectFlatMapFunction());
+        flatMap.addSink(new SinkToJdbcUtils(parameterTool));
         env.execute();
-    }
-
-    public static class MysqlSource extends RichSourceFunction<List<VehJobInfo>> {
-
-        private final String sql;
-
-        private final ParameterTool parameterTool;
-
-        private final QueryParams params;
-
-        private QueryRunner queryRunner;
-
-        public MysqlSource(String sql, ParameterTool parameterTool, QueryParams params) {
-            this.sql = sql;
-            this.parameterTool = parameterTool;
-            this.params = params;
-        }
-
-        @Override
-        public void open(Configuration parameters) throws Exception {
-            Properties properties = MysqlConfigUtil.buildMysqlProps(parameterTool);
-            queryRunner = new QueryRunner(JdbcUtils.getDataSource(properties));
-        }
-
-        @Override
-        public void run(SourceContext<List<VehJobInfo>> ctx) throws Exception {
-            List<VehJobInfo> list= queryRunner.query(sql, new BeanListHandler<>(VehJobInfo.class), params.getStartTime(), params.getEndTime());
-            ctx.collect(list);
-        }
-
-        @Override
-        public void cancel() {
-
-        }
-
     }
 }

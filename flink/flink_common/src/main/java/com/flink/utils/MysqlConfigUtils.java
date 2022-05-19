@@ -11,7 +11,7 @@ import java.util.Properties;
  * @version 1.0
  * @date 2022-5-18 11:52
  */
-public class MysqlConfigUtil {
+public class MysqlConfigUtils {
 
     public static Properties buildMysqlProps() {
         return buildMysqlProps(ParameterTool.fromSystemProperties());

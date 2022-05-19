@@ -24,7 +24,7 @@ import static com.flink.common.PropertiesConstants.*;
  * @version 1.0
  * @date 2022-3-14 13:53
  */
-public class KafkaConfigUtil {
+public class KafkaConfigUtils {
 
     /**
      * 设置基础的 Kafka 配置

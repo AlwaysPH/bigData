@@ -10,7 +10,7 @@ import org.apache.flink.streaming.connectors.redis.common.config.FlinkJedisPoolC
  * @version 1.0
  * @date 2022-3-14 15:15
  */
-public class RedisConfigUtil {
+public class RedisConfigUtils {
 
     public static FlinkJedisPoolConfig buildRedisConfig(){
         return buildRedisConfig(ParameterTool.fromSystemProperties());

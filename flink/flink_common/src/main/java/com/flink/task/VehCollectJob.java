@@ -9,6 +9,8 @@ import com.flink.utils.DateUtils;
 import com.flink.utils.ExecutionEnvUtils;
 import com.flink.utils.SinkToJdbcUtils;
 import org.apache.flink.api.java.utils.ParameterTool;
+import org.apache.flink.streaming.api.CheckpointingMode;
+import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -26,6 +28,18 @@ public class VehCollectJob {
     public static void main(String[] args) throws Exception {
         ParameterTool parameterTool =  ExecutionEnvUtils.createParameterTool();
         StreamExecutionEnvironment env = ExecutionEnvUtils.prepare(parameterTool);
+        //每隔30秒checkpoint一次
+        env.enableCheckpointing(30 * 1000L);
+        //checkpoint模式
+        env.getCheckpointConfig().setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
+        //checkpoint的存储位置
+        env.getCheckpointConfig().setCheckpointStorage("hdfs://bigData01:9000/flink/checkData");
+        //checkpoint超时时间
+        env.getCheckpointConfig().setCheckpointTimeout(60 * 1000L);
+        //两次checkpoint之间的最小时间间隔
+        env.getCheckpointConfig().setMinPauseBetweenCheckpoints(5 * 1000L);
+        //checkpoint并发数
+        env.getCheckpointConfig().setMaxConcurrentCheckpoints(1);
         String querySql = "SELECT " +
                 "t.CID as id, " +
                 "t.PROJECT_ID as projectId, " +

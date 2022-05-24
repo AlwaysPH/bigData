@@ -3,6 +3,7 @@ package com.hadoop.mapreduce;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +16,20 @@ public class MyMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
     private Text text = new Text();
 
     private LongWritable v2 = new LongWritable(1L);
+
+    private String fileName;
+
+    /**
+     * 初始化获取文件信息
+     * @param context
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Override
+    protected void setup(Context context) throws IOException, InterruptedException {
+        FileSplit fileSplit = (FileSplit)context.getInputSplit();
+        fileName = fileSplit.getPath().getName();
+    }
 
     /**
      * 需要实现map函数

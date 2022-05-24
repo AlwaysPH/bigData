@@ -155,4 +155,6 @@ public class VehJobInfo implements Serializable {
      */
     private String vehSecondClassName;
 
+    private String updateTime;
+
 }

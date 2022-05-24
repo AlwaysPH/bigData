@@ -36,18 +36,22 @@ public class SinkToJdbcUtils extends RichSinkFunction<List<VehJobInfo>> {
     @Override
     public void invoke(List<VehJobInfo> value, Context context) throws Exception {
         try {
-            StringBuilder sb = new StringBuilder("BEGIN;");
-            value.forEach(data -> {
-                sb.append("update t_vehicle_today_totaljob_info " +
-                        "set TODAY_TOTAL_MILEAGE = " + data.getTodayTotalMileage() + "," +
-                        "TODAY_TOTAL_TIMES = " + data.getTodayTotalTimes() + "," +
-                        "TOTAL_COLLECT = " + data.getTotalCollect() + "," +
-                        "TRANSPORT_NUM = " + data.getTransportNum() + "," +
-                        "ONLINE_TIMES = " + data.getOnlineTimes() + " where " +
-                        " VEH_ID = " + data.getVehId() + " and WORK_DATE = " + data.getWorkDate() + ";");
-            });
-            sb.append("COMMIT;");
-            queryRunner.update(sb.toString());
+            String sql = "update t_vehicle_today_totaljob_info set TODAY_TOTAL_MILEAGE = ?, TODAY_TOTAL_TIMES = ?," +
+                    " TOTAL_COLLECT = ?, TRANSPORT_NUM = ?, ONLINE_TIMES = ?, update_time = ? " +
+                    "where VEH_ID = ? and WORK_DATE = ?";
+            Object[][] params = new Object[value.size()][8];
+            for (int i = 0; i < value.size(); i++) {
+                VehJobInfo info = value.get(i);
+                params[i][0] = info.getTodayTotalMileage();
+                params[i][1] = info.getTodayTotalTimes();
+                params[i][2] = info.getTotalCollect();
+                params[i][3] = info.getTransportNum();
+                params[i][4] = info.getOnlineTimes();
+                params[i][5] = info.getUpdateTime();
+                params[i][6] = info.getVehId();
+                params[i][7] = info.getWorkDate();
+            }
+            queryRunner.batch(sql, params);
         }catch (Exception e){
             log.error("保存垃圾收运数据失败", e);
         }

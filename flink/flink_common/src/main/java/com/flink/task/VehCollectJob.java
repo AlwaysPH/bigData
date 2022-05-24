@@ -97,7 +97,7 @@ public class VehCollectJob {
         SingleOutputStreamOperator<List<VehJobInfo>> flatMap = source.keyBy(e -> e.get(0).getVehId())
                 .flatMap(new VehCollectFlatMapFunction());
         flatMap.print("update");
-        flatMap.addSink(new SinkToJdbcUtils(parameterTool));
+//        flatMap.addSink(new SinkToJdbcUtils(parameterTool));
         env.execute();
     }
 }

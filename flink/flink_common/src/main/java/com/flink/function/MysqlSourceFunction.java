@@ -50,10 +50,12 @@ public class MysqlSourceFunction extends RichSourceFunction<List<VehJobInfo>> {
 
     @Override
     public void run(SourceContext<List<VehJobInfo>> ctx) throws Exception {
-        List<VehJobInfo> list= queryRunner.query(sql, new BeanListHandler<>(VehJobInfo.class), params.getStartTime(), params.getEndTime());
-        ctx.collect(list);
-        //每隔半小时执行一次
-        countDownLatch.await(30, TimeUnit.MINUTES);
+        while(true){
+            List<VehJobInfo> list= queryRunner.query(sql, new BeanListHandler<>(VehJobInfo.class), params.getStartTime(), params.getEndTime());
+            ctx.collect(list);
+            //每隔半小时执行一次
+            countDownLatch.await(5, TimeUnit.MINUTES);
+        }
     }
 
     @Override

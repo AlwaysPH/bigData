@@ -43,7 +43,6 @@ public class ExecutionEnvUtils {
             env.enableCheckpointing(parameterTool.getLong(PropertiesConstants.STREAM_CHECKPOINT_INTERVAL, 10000));
         }
         env.getConfig().setGlobalJobParameters(parameterTool);
-        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
         return env;
     }
 }

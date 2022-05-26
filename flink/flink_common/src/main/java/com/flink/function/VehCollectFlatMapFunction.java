@@ -90,20 +90,20 @@ public class VehCollectFlatMapFunction extends RichFlatMapFunction<List<VehJobIn
             Double onlineSum = tList.stream().mapToDouble(data -> null == data.getOnlineTimes() ? 0.00D : data.getOnlineTimes().doubleValue()).sum();
             Double mileSum = tList.stream().mapToDouble(data -> null == data.getTodayTotalMileage() ? 0.00D : data.getTodayTotalMileage().doubleValue()).sum();
             Double totalTimeSum = tList.stream().mapToDouble(data -> null == data.getTodayTotalTimes() ? 0.00D : data.getTodayTotalTimes().doubleValue()).sum();
-            VehJobInfo info = tList.get(0);
-            info.setTodayTotalMileage(new BigDecimal(mileSum).setScale(2, BigDecimal.ROUND_HALF_UP));
-            info.setTodayTotalTimes(new BigDecimal(totalTimeSum).setScale(2, BigDecimal.ROUND_HALF_UP));
-            info.setTotalCollect(new BigDecimal(collectSum).setScale(2, BigDecimal.ROUND_HALF_UP));
-            info.setTransportNum(transSum);
-            info.setOnlineTimes(new BigDecimal(onlineSum).setScale(2, BigDecimal.ROUND_HALF_UP));
-            info.setUpdateTime(DateUtils.parseToString(new Date(), DateEnum.YEAR_MONTH_DAY_H_M_S.getType()));
-            result.add(info);
             try {
                 Long collect = collectState.get(key) == null ? 0L : collectState.get(key);
                 Integer trans = transState.get(key) == null ? 0 : transState.get(key);
                 Double online = onlineTimeState.get(key) == null ? 0.0D : onlineTimeState.get(key);
                 Double mile = totalMileState.get(key) == null ? 0.00D : totalMileState.get(key);
                 Double time = totalTimeState.get(key) == null ? 0.00D : totalTimeState.get(key);
+                VehJobInfo info = tList.get(0);
+                info.setTodayTotalMileage(new BigDecimal(mileSum + mile).setScale(2, BigDecimal.ROUND_HALF_UP));
+                info.setTodayTotalTimes(new BigDecimal(totalTimeSum + time).setScale(2, BigDecimal.ROUND_HALF_UP));
+                info.setTotalCollect(new BigDecimal(collectSum + collect).setScale(2, BigDecimal.ROUND_HALF_UP));
+                info.setTransportNum(transSum + trans);
+                info.setOnlineTimes(new BigDecimal(onlineSum + online).setScale(2, BigDecimal.ROUND_HALF_UP));
+                info.setUpdateTime(DateUtils.parseToString(new Date(), DateEnum.YEAR_MONTH_DAY_H_M_S.getType()));
+                result.add(info);
                 collectState.put(key, collectSum + collect);
                 transState.put(key, transSum + trans);
                 onlineTimeState.put(key, onlineSum + online);

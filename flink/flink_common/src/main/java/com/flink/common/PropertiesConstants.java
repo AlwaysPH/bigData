@@ -50,4 +50,6 @@ public class PropertiesConstants {
     public static final String MYSQL_URL = "mysql.jdbc.connectionURL";
     public static final String MYSQL_USERNAME = "mysql.jdbc.username";
     public static final String MYSQL_PASSWORD = "mysql.jdbc.password";
+    public static final String MYSQL_HOST = "mysql.jdbc.host";
+    public static final String MYSQL_PORT = "mysql.jdbc.port";
 }
